@@ -41,7 +41,7 @@
         <div class="py-6">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 @if ($errors -> any())
-                <div class="alert alert-danger" role="alert">
+                <div class="alert alert-danger" id="alert" role="alert">
                     @foreach ($errors->all() as $error)
                     <li class="list-item">
                         {{$error}}
@@ -50,8 +50,8 @@
                 </div>
                 @endif
                 @if(session('success'))
-                <div class="alert alert-success" role="alert">
-                   <i class="fa fa-check"></i> {{session('success')}}
+                <div class="alert alert-success" id="alert" role="alert">
+                    <i class="fa fa-check"></i> {{session('success')}}
                 </div>
                 @endif
 
@@ -65,6 +65,17 @@
     @endif
 
     @livewireScripts
+
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+
+    <script>
+        $("document").ready(function(){
+            setTimeout(function(){
+                $("#alert").remove();
+            }, 5000 );
+
+        });
+    </script>
 
 </body>
 
