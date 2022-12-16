@@ -17,7 +17,7 @@ class QuizController extends Controller
      */
     public function index()
     {
-        $quizzes = Quiz::paginate(5);
+        $quizzes = Quiz::withCount('questions')->paginate(5);
         return view("admin/quiz/list", compact('quizzes'));
     }
 
@@ -62,7 +62,7 @@ class QuizController extends Controller
      */
     public function edit($id)
     {
-        $quiz = Quiz::find($id) ?? abort(404, 'Quiz is not found');
+        $quiz = Quiz::withCount('questions')->find($id) ?? abort(404, 'Quiz is not found');
         return view("admin/quiz/edit", compact('quiz'));
     }
 
@@ -88,10 +88,9 @@ class QuizController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        $quiz = Quiz::find($id) ?? abort(404, 'Quiz is not found');
-        $quiz->delete();
+        Quiz::find($id)->delete($request->post()) ?? abort(404, 'Quiz is not found');
         return redirect()->route('quizzes.index')->withSuccess("Quiz Succesfully Deleted");
     }
 }

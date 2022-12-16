@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\QuestionController;
 use App\Http\Controllers\Admin\QuizController;
 use Illuminate\Support\Facades\Route;
 
@@ -29,8 +30,20 @@ Route::middleware([
 });
 
 Route::middleware(['auth', 'isAdmin'])->prefix('admin')->group(function () {
-    //**↓↓  Farklı bir yontem öğren beğenmedin  ↓↓ */
-    Route::get('quizzes/{id}', [QuizController::class, 'destroy'])->whereNumber('id')->name('quizzes.destroy');
-                        //** ↑↑ */
+
     Route::resource('quizzes', QuizController::class);
+    Route::resource('quiz/{quiz_id}/questions', QuestionController::class);
 });
+
+// Route::middleware(['auth', 'isAdmin'])->prefix('admin')->group(function () {
+//     Route::delete('quizzes/{id}', [QuizController::class, 'destroy'])->where('id', '[0-9]+')->name('quizzes.destroy');
+//     Route::resource('quizzes', QuizController::class)->except('destroy');
+//     Route::resource('quiz.questions', QuestionController::class)->shallow();
+// });
+
+//**↓↓  Farklı bir yontem öğren beğenmedin  ↓↓**/
+// Route::get('quizzes/{id}', [QuizController::class, 'destroy'])->whereNumber('id')->name('quizzes.destroy');
+//** ↑↑ */
+//**↓↓  Farklı bir yontem öğren beğenmedin  ↓↓**/
+// Route::get('quiz/{quiz_id}/questions/{id}', [QuestionController::class, 'destroy'])->whereNumber('id')->name('quizzes.destroy');
+//** ↑↑ */
