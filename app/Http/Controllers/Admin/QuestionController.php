@@ -127,16 +127,14 @@ class QuestionController extends Controller
      */
     public function destroy(Request $request, $quiz_id, $question_id)
     {
-        $question = Quiz::find($quiz_id)->questions()->whereId($question_id) ?? abort(404, 'Quiz or Question is not found');
-        // $this->deleteImage($request, $question);
+        $question = Quiz::findOrFail($quiz_id)->questions()->findOrFail($question_id) ?? abort(404, 'Quiz or Question is not found');
+
         $question->delete($request->post());
+
+        if ($question->image) {
+            $deleted = $question->image;
+            File::delete(public_path($deleted));
+        }
         return redirect()->route('questions.index', $quiz_id)->withSuccess("Question Succesfully Deleted");
     }
-    // protected function deleteImage(Request $request, $question)
-    // {
-    //     if ($request->hasFile('image')) {
-    //         $deleted = $question->image;
-    //         File::delete(public_path($deleted));
-    //     }
-    // }
 }
