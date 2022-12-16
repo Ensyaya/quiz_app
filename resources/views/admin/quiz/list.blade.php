@@ -3,14 +3,39 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"> --}}
     <x-slot name="header_title">Quizzes Page</x-slot>
     <x-slot name="header">
-        Quizzes Page
+        <a href="{{ route('quizzes.index') }}"><strong>Quizzes Page</strong></a>
     </x-slot>
     <div class="card">
-        <div class="card-body">
-            <h3 class="card-title">
-                <a href="{{route('quizzes.create')}}" class="btn btn-sm btn-primary"><i class="fa fa-plus"></i> Make
+        <div class="card-header d-flex justify-content-between mb-2">
+            <form action="" method="GET" class="row col-md-10">
+                <div class="col-md-4">
+                    <input type="text" value="{{request()->get('title')}}" name="title" placeholder="Quiz name"
+                        class="rounded w-full ">
+                </div>
+                <div class="col-md-4 ml-2">
+                    <select name="status" se onchange="this.form.submit()" class="rounded w-full">
+                        <option value="">Choose Status</option>
+                        <option @if (request()->get('status')==='publish' ) selected @endif value="publish">Active
+                        </option>
+                        <option @if (request()->get('status')==='passive' ) selected @endif value="passive">Passive
+                        </option>
+                        <option @if (request()->get('status')==='draft' ) selected @endif value="draft">Draft</option>
+                    </select>
+                </div>
+                @if (request()->get('title') || request()->get('status'))
+                <div class="col-md-2">
+                    <a href="{{route('quizzes.index')}}" class="btn btn-secondary" style="margin-top: 2px"><i
+                            class="fa-sharp fa-solid fa-rotate"></i> Reset</a>
+                </div>
+                @endif
+            </form>
+            <h3 class="card-title col-md-2 flex flex-row-reverse">
+                <a href="{{route('quizzes.create')}}" class="btn btn-primary"><i class="fa fa-plus"></i> Make
                     Quiz</a>
             </h3>
+        </div>
+        <div class="card-body">
+
             <table class="table table-bordered">
                 <thead>
                     <tr>
@@ -68,7 +93,7 @@
                     @endforeach
                 </tbody>
             </table>
-            {{$quizzes->links()}}
+            {{$quizzes->withQueryString()->links()}}
         </div>
     </div>
 </x-app-layout>
