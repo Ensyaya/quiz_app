@@ -1,6 +1,4 @@
 <x-app-layout>
-    {{--
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"> --}}
     <x-slot name="header_title">Quiz Questions Page</x-slot>
     <x-slot name="header">
         <a href="{{ route('quizzes.index') }}"><strong>{{$quiz->title}}</strong></a>
@@ -9,12 +7,12 @@
     <div class="card">
         <div class="card-body">
             <h3 class="card-title float-start">
-                <a href="{{route('quizzes.index')}}" class="btn btn-sm btn-secondary"><i
+                <a href="{{route('quizzes.index')}}" class="btn btn-secondary"><i
                         class="fa-sharp fa-solid fa-arrow-left"></i> Quiz
                     Page</a>
             </h3>
             <h3 class="card-title float-end">
-                <a href="{{route('questions.create',$quiz->id)}}" class="btn btn-sm btn-primary"><i
+                <a href="{{route('questions.create',$quiz->id)}}" class="btn btn-primary"><i
                         class="fa fa-plus"></i> Make
                     Questions</a>
             </h3>

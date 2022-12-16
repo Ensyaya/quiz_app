@@ -1,6 +1,4 @@
 <x-app-layout>
-    {{--
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"> --}}
     <x-slot name="header_title">Quizzes Page</x-slot>
     <x-slot name="header">
         <a href="{{ route('quizzes.index') }}"><strong>Quizzes Page</strong></a>
