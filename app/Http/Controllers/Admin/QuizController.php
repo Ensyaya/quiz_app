@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\QuizCreateRequest;
 use App\Http\Requests\QuizUpdateRequest;
 use App\Models\Quiz;
+use Illuminate\Support\Facades\File;
 use Illuminate\Http\Request;
 
 class QuizController extends Controller
@@ -100,7 +101,17 @@ class QuizController extends Controller
      */
     public function destroy(Request $request, $id)
     {
-        Quiz::find($id)->delete($request->post()) ?? abort(404, 'Quiz is not found');
+        $quiz = Quiz::findOrFail($id) ?? abort(404, 'Quiz is not found');
+        $questions = $quiz->questions()->get();
+        foreach ($questions as $question) {
+            if ($question->image) {
+                $deleted = $question->image;
+                File::delete(public_path($deleted));
+            }
+        }
+
+        $quiz->delete($request->post());
+
         return redirect()->route('quizzes.index')->withSuccess("Quiz Succesfully Deleted");
     }
 }
