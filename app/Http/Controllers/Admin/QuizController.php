@@ -88,7 +88,7 @@ class QuizController extends Controller
     {
         $quiz = Quiz::find($id) ?? abort(404, 'Quiz is not found');
 
-        Quiz::where('id', $id)->update($request->except(['_method', '_token']));
+        Quiz::find($id)->update($request->except(['_method', '_token']));
 
         return redirect()->route('quizzes.index')->withSuccess("Quiz Succesfully Updated");
     }
@@ -102,7 +102,9 @@ class QuizController extends Controller
     public function destroy(Request $request, $id)
     {
         $quiz = Quiz::findOrFail($id) ?? abort(404, 'Quiz is not found');
+
         $questions = $quiz->questions()->get();
+
         foreach ($questions as $question) {
             if ($question->image) {
                 $deleted = $question->image;
