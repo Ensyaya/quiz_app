@@ -6,7 +6,8 @@
 
     <div class="card">
         <div class="card-body text-lg">
-            <form action="" method="POST" class="row">
+            <form action="{{route('quiz.result',$quiz->slug)}}" method="POST" class="row">
+                @csrf
                 @foreach ($quiz->questions as $question)
                 <div class="mb-3 col-md-8">
                     <strong>{{$loop->iteration}}. {{$question->question}}</strong>
