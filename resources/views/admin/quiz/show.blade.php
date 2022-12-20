@@ -72,8 +72,6 @@
                                 <th scope="col">Point</th>
                                 <th class="text-success" scope="col">True</th>
                                 <th class="text-danger" scope="col">False</th>
-                                <th scope="col">Transactions</th>
-
                             </tr>
                         </thead>
                         <tbody>
@@ -83,7 +81,6 @@
                                 <td>{{$result->point}}</td>
                                 <td class="text-success">{{$result->correct}}</td>
                                 <td class="text-danger">{{$result->wrong}}</td>
-                                <td>@mdo</td>
                             </tr>
 
                             @endforeach
