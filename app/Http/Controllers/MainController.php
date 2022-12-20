@@ -17,12 +17,15 @@ class MainController extends Controller
 
     public function quiz($slug)
     {
-        $quiz = Quiz::whereSlug($slug)->with('questions')->first() ?? abort(404, 'Quiz is not found');
+        $quiz = Quiz::whereSlug($slug)->with('questions.myAnswer', 'myResult')->first() ?? abort(404, 'Quiz is not found');
+        if ($quiz->myResult) {
+            return view('quiz_result', compact('quiz'));
+        }
         return view('quiz', compact('quiz'));
     }
     public function quiz_detail($slug)
     {
-        $quiz = Quiz::whereSlug($slug)->with('my_result')->with('results')->withCount('questions')->first() ?? abort(404, 'Quiz is not found');
+        $quiz = Quiz::whereSlug($slug)->with('myResult', 'topTen.user')->withCount('questions')->first() ?? abort(404, 'Quiz is not found');
         return view('quiz_detail', compact('quiz'));
     }
     public function result(Request $request, $slug)
@@ -30,7 +33,7 @@ class MainController extends Controller
         $quiz = Quiz::with('questions')->whereSlug($slug)->first() ?? abort(404, 'Quiz is not found');
         $correct = 0;
 
-        if ($quiz->my_result) {
+        if ($quiz->myResult) {
             abort(404, 'you have taken this Quiz before');
         }
 

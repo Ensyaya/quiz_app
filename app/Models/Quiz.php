@@ -19,7 +19,8 @@ class Quiz extends Model
         'finished_at'
     ];
     protected $appends = [
-        'details'
+        'details',
+        'my_rank'
     ];
 
 
@@ -32,11 +33,25 @@ class Quiz extends Model
             ];
         }
     }
+    public function getMyRankAttribute()
+    {
+        $rank = 0;
+        foreach ($this->results()->orderByDesc('point')->get() as $result) {
+            $rank += 1;
+            if (auth()->user()->id == $result->user_id) {
+                return $rank;
+            }
+        }
+    }
     public function results()
     {
         return $this->hasMany('App\Models\Result');
     }
-    public function my_result()
+    public function topTen()
+    {
+        return $this->results()->orderByDesc('point')->take(10);
+    }
+    public function myResult()
     {
         return $this->hasOne('App\Models\Result')->where('user_id', auth()->user()->id);
     }
