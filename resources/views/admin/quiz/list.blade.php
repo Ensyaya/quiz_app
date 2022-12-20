@@ -73,14 +73,17 @@
                         </td>
                         <td>
                             <div class="d-flex justify-items-between">
-                                <a href="{{route('questions.index',$quiz->id)}}" class="btn btn-sm btn-warning"><i
+
+                                <a href="{{route('quizzes.show',$quiz->id)}}" class="btn btn-sm btn-secondary w-8"><i
+                                        class="fa fa-info"></i></a>
+                                <a href="{{route('questions.index',$quiz->id)}}" class="btn btn-sm btn-warning ml-3"><i
                                         class="fa fa-question"></i></a>
                                 <a href="{{route('quizzes.edit',$quiz->id)}}" class="btn btn-sm btn-primary mx-3"><i
                                         class="fa fa-pencil"></i></a>
                                 <form action="{{ route('quizzes.destroy',$quiz->id)}}" method="POST">
                                     @method('DELETE')
                                     @csrf
-                                    <button type="submit" class="bg-red-500 py-1 px-2 rounded text-white">
+                                    <button type="submit" class="bg-red-700 btn btn-sm btn-danger">
                                         <i class="fa fa-times"></i>
                                     </button>
                                 </form>

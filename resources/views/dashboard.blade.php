@@ -21,8 +21,26 @@
                 {{$quizzes->links()}}
             </div>
         </div>
-        <div class="col-md-4">
-            test
+        <div class="col-md-4 text-lg">
+            <div class="card">
+                <div class="card-header">
+                    Quiz Results
+                </div>
+                <ul class="list-group list-group-flush">
+                    @if ($results)
+                    @foreach ($results as $result)
+                    <li class="list-group-item">
+                        <a href="{{ route('quiz.detail', $result->quiz->slug) }}">{{$result->quiz->title}}</a> :
+                        <strong>{{$result->point}}</strong>
+                    </li>
+                    @endforeach
+                    @else
+                    <li class="list-group-item">
+                        <h1>You haven't taken the exam yet</h1>
+                    </li>
+                    @endif
+                </ul>
+            </div>
         </div>
     </div>
 

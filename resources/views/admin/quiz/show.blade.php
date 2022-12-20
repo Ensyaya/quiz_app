@@ -6,27 +6,14 @@
     <div class="card">
         <div class="card-body">
             <div class="row">
+                <h3 class="card-title float-start">
+                    <a href="{{route('quizzes.index')}}" class="btn btn-secondary"><i
+                            class="fa-sharp fa-solid fa-arrow-left"></i> Quiz
+                        Page</a>
+                </h3>
                 <div class="col-md-4 text-lg">
                     <ul class="list-group">
-                        @if ($quiz->my_rank)
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                            Your Rank
-                            <span class="badge bg-success rounded-pill">#{{$quiz->my_rank}}</span>
-                        </li>
-                        @endif
-                        @if ($quiz->myResult)
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                            Your Point
-                            <span class="badge bg-success rounded-pill">{{$quiz->myResult->point}}</span>
-                        </li>
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                            Correct / Wrong
-                            <div class="float-end">
-                                <span class="badge bg-success rounded-pill">{{$quiz->myResult->correct}} True</span>
-                                <span class="badge bg-danger rounded-pill">{{$quiz->myResult->wrong}} False</span>
-                            </div>
-                        </li>
-                        @endif
+
                         <li class="list-group-item d-flex justify-content-between align-items-center">
                             Number of questions
                             <span class="badge bg-secondary rounded-pill">{{$quiz->questions_count}}</span>
@@ -61,8 +48,7 @@
                                     <img class="h-8 w-8 rounded-full object-cover mx-2"
                                         src="{{$result->user->profile_photo_url}}" alt="">
                                     <div class="me-auto">
-                                        <span @if (auth()->user()->id == $result->user_id) class="text-success fs-4"
-                                            @endif>{{$result->user->name}}</span>
+                                        <span>{{$result->user->name}}</span>
                                     </div>
 
                                     <div class="float-end">
@@ -75,14 +61,34 @@
                     </div>
                     @endif
                 </div>
-                <div class="col-md-8">
+                <div class="col-md-8 text-lg">
                     <h5 class="card-title text-lg"><strong>{{$quiz->title}}</strong></h5>
                     <p class="card-text text-lg">{{$quiz->description}}</p>
-                    @if ($quiz->myResult)
-                    <a href="{{ route('quiz.join',$quiz->slug) }}" class="btn btn-warning mt-2 float-end">View Quiz</a>
-                    @elseif($quiz->finished_at>now() || $quiz->finished_at == null)
-                    <a href="{{ route('quiz.join',$quiz->slug) }}" class="btn btn-primary mt-2 float-end">Join the
-                        Quiz</a>
+                    @if ($quiz->results)
+                    <table class="table table-bordered my-3">
+                        <thead>
+                            <tr>
+                                <th scope="col">Name</th>
+                                <th scope="col">Point</th>
+                                <th class="text-success" scope="col">True</th>
+                                <th class="text-danger" scope="col">False</th>
+                                <th scope="col">Transactions</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($quiz->results as $result)
+                            <tr>
+                                <td>{{$result->user->name}}</td>
+                                <td>{{$result->point}}</td>
+                                <td class="text-success">{{$result->correct}}</td>
+                                <td class="text-danger">{{$result->wrong}}</td>
+                                <td>@mdo</td>
+                            </tr>
+
+                            @endforeach
+                        </tbody>
+                    </table>
                     @endif
                 </div>
             </div>
