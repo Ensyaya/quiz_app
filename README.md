@@ -1,6 +1,6 @@
 # QuizApp
 
-Laravel ve Bootstrap 5 ile yazılmış full-stack bir Quiz sistemi.
+Laravel ve Bootstrap 5 ile yazılmış full-stack bir Quiz sistemi. 
 
 ## Tech Stack
 **Backend**: [Laravel](https://laravel.com/)
